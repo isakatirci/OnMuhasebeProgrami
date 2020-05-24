@@ -60,41 +60,53 @@
                         </div>
                     </div>
                     <div class="separator separator-dashed my-10"></div>
-                    <div class="form-group row">
-                        <div class="col-lg-12">
-                            <!--begin::Form-->
-                            <div class="form">
-                                <div class="card-body">
-                                    <div class="form-group row">
-                                        <div class="col-lg-4">
-                                            <label>Hizmet/Ürün:</label>
-                                            <input type="text" class="form-control" placeholder="Hizmet/Ürün" />
-                                            <span class="form-text text-muted">Hizmet yada Ürün seçiniz</span>
-                                        </div>
-                                        <div class="col-lg-2">
-                                            <label>Miktar:</label>
-                                            <input type="text" class="form-control" placeholder="Miktar" />
-                                            <span class="form-text text-muted">Miktar giriniz</span>
-                                        </div>
-                                        <div class="col-lg-2">
-                                            <label>Birim Fiyat:</label>
-                                            <input type="text" class="form-control" placeholder="Birim Fiyat" />
-                                            <span class="form-text text-muted">Birim Fiyat giriniz</span>
-                                        </div>
-                                        <div class="col-lg-2">
-                                            <label>Vergi:</label>
-                                            <input type="text" class="form-control" placeholder="Vergi" />
-                                            <span class="form-text text-muted">Vergi yüzdesi seçiniz</span>
-                                        </div>
-                                        <div class="col-lg-2">
-                                            <label>Toplam:</label>
-                                            <input type="text" class="form-control" value="" placeholder="" />
-                                            <span class="form-text text-muted"></span>
-                                        </div>
+                    <div id="kt_repeater_1">
+                        <div class="form-group row">
+                            <label class="col-lg-2 col-form-label text-right">Fatura Kalemleri:</label>
+                            <div data-repeater-list="" class="col-lg-10">
+                                <div data-repeater-item="" class="form-group row align-items-center">
+                                    <div class="col-md-4">
+                                        <label>Hizmet/Ürün:</label>
+                                        <select class="form-control select2 kt_select2_urun_hizmet" id="" name="HizmetUrun">
+                                            <option label="Label"></option>
+                                        </select>
+                                        <div class="d-md-none mb-2"></div>
                                     </div>
-                                </div>                
+                                    <div class="col-md-1">
+                                        <label>Miktar:</label>
+                                        <input type="text" class="form-control" placeholder="Miktar" />
+                                        <div class="d-md-none mb-2"></div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>Birim Fiyat:</label>
+                                        <input type="text" class="form-control" placeholder="Birim Fiyat" />
+                                        <div class="d-md-none mb-2"></div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>Vergi:</label>
+                                        <input type="text" class="form-control" placeholder="Vergi" />
+                                        <div class="d-md-none mb-2"></div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>Toplam:</label>
+                                        <input type="text" class="form-control" value="" placeholder="" />
+                                        <div class="d-md-none mb-2"></div>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <a href="javascript:;" data-repeater-delete="" class="btn btn-sm font-weight-bolder btn-light-danger">
+                                            <i class="la la-trash-o"></i>Sil
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
-                            <!--end::Form-->
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-lg-2 col-form-label text-right"></label>
+                            <div class="col-lg-4">
+                                <a href="javascript:;" data-repeater-create="" class="btn btn-sm font-weight-bolder btn-light-primary">
+                                    <i class="la la-plus"></i>Ekle
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -115,31 +127,96 @@
 </div>
 
 @section scripts {
-    <script>
-        $(document).ready(function () {
-            $(".chose-country").select2({
-                ajax: {
-                    url: '/Home/GetEmployeeList',
-                    width: 'resolve',
-                    data: function (params) {
-                        return {
-                            q: params.term// search term
-                        };
-                    },
-                    processResults: function (data) {
-                        return {
-                            results: data.items
-                        };
-                    },
-                    minimumInputLength: 2,
-                    width: 'resolve'
-                }
-            });
 
+
+    <script>
+
+        $('#kt_repeater_1').repeater({
+            initEmpty: false,    
+            show: function () {                
+                $(this).slideDown();
+                $('#kt_repeater_1 .select2-container').remove();
+                $('#kt_repeater_1 .kt_select2_urun_hizmet').select2({
+                    placeholder: "Ürün yada hizmet seçiniz",
+                    allowClear: true,
+                    ajax: {
+                        url: "https://api.github.com/search/repositories",
+                        dataType: 'json',
+                        delay: 250,
+                        data: function (params) {
+                            return {
+                                q: params.term, // search term
+                                page: params.page
+                            };
+                        },
+                        processResults: function (data, params) {
+                            // parse the results into the format expected by Select2
+                            // since we are using custom formatting functions we do not need to
+                            // alter the remote JSON data, except to indicate that infinite
+                            // scrolling can be used
+                            params.page = params.page || 1;
+
+                            return {
+                                results: data.items,
+                                pagination: {
+                                    more: (params.page * 30) < data.total_count
+                                }
+                            };
+                        },
+                        cache: true
+                    },
+                    escapeMarkup: function (markup) {
+                        return markup;
+                    }, // let our custom formatter work
+                    minimumInputLength: 1,
+                    templateResult: formatRepo, // omitted for brevity, see the source of this page
+                    templateSelection: formatRepoSelection // omitted for brevity, see the source of this page
+                });
+                $('.select2-container').css('width', '100%');
+            },
+            hide: function (deleteElement) {
+                $(this).slideUp(deleteElement);
+            }
+        }); 
+
+
+        $('#kt_repeater_1 .kt_select2_urun_hizmet').select2({
+            placeholder: "Ürün yada hizmet seçiniz",
+            allowClear: true,
+            ajax: {
+                url: "https://api.github.com/search/repositories",
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        q: params.term, // search term
+                        page: params.page
+                    };
+                },
+                processResults: function (data, params) {
+                    // parse the results into the format expected by Select2
+                    // since we are using custom formatting functions we do not need to
+                    // alter the remote JSON data, except to indicate that infinite
+                    // scrolling can be used
+                    params.page = params.page || 1;
+
+                    return {
+                        results: data.items,
+                        pagination: {
+                            more: (params.page * 30) < data.total_count
+                        }
+                    };
+                },
+                cache: true
+            },
+            escapeMarkup: function (markup) {
+                return markup;
+            }, // let our custom formatter work
+            minimumInputLength: 1,
+            templateResult: formatRepo, // omitted for brevity, see the source of this page
+            templateSelection: formatRepoSelection // omitted for brevity, see the source of this page
         });
-    </script>
 
-    <script>
 
         function formatRepoSelection(repo) {
             return repo.full_name || repo.text;
@@ -200,7 +277,6 @@
             templateSelection: formatRepoSelection // omitted for brevity, see the source of this page
         });
 
-
         var arrows;
         if (KTUtil.isRTL()) {
             arrows = {
@@ -213,8 +289,6 @@
                 rightArrow: '<i class="la la-angle-right"></i>'
             }
         }
-
-        debugger;
 
         // enable clear button
         $('#kt_datepicker_3, #kt_datepicker_3_validate').datepicker({
