@@ -9,7 +9,6 @@ namespace OnMuhasebeProgrami.WebUI.Models.Entity
     [Table("FaturaEtiket")]
     public partial class FaturaEtiket
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
 
         public string Ad { get; set; }
