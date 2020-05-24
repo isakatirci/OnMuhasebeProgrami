@@ -157,7 +157,7 @@
                             params.page = params.page || 1;
 
                             return {
-                                results: data.items,
+                                results: data.items.map(function (item) { return { id: (item.full_name || item.text), text: (item.full_name || item.text) }; }),
                                 pagination: {
                                     more: (params.page * 30) < data.total_count
                                 }
@@ -169,8 +169,8 @@
                         return markup;
                     }, // let our custom formatter work
                     minimumInputLength: 1,
-                    templateResult: formatRepo, // omitted for brevity, see the source of this page
-                    templateSelection: formatRepoSelection // omitted for brevity, see the source of this page
+                    //templateResult: formatRepo, // omitted for brevity, see the source of this page
+                    //templateSelection: formatRepoSelection // omitted for brevity, see the source of this page
                 });
                 $('.select2-container').css('width', '100%');
             },
@@ -198,10 +198,13 @@
                     // since we are using custom formatting functions we do not need to
                     // alter the remote JSON data, except to indicate that infinite
                     // scrolling can be used
+                    debugger;
                     params.page = params.page || 1;
 
+                    let temp = data.items.map(function (item) { return { id: (item.full_name || item.text), text: (item.full_name || item.text) }; });
+                    console.log(temp);
                     return {
-                        results: data.items,
+                        results: temp,
                         pagination: {
                             more: (params.page * 30) < data.total_count
                         }
@@ -213,8 +216,8 @@
                 return markup;
             }, // let our custom formatter work
             minimumInputLength: 1,
-            templateResult: formatRepo, // omitted for brevity, see the source of this page
-            templateSelection: formatRepoSelection // omitted for brevity, see the source of this page
+            //templateResult: formatRepo, // omitted for brevity, see the source of this page
+            //templateSelection: formatRepoSelection // omitted for brevity, see the source of this page
         });
 
 
