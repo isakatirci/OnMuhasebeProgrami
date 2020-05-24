@@ -9,7 +9,7 @@
         <!--begin::Card-->
         <div class="card card-custom">
             <div class="card-header">
-                <h3 class="card-title">3 Columns Horizontal Form Layout</h3>
+                <h3 class="card-title">Fatura Ekleme Sayfası</h3>
                 <div class="card-toolbar">
                 </div>
             </div>
@@ -17,9 +17,9 @@
             <form class="form">
                 <div class="card-body">
                     <div class="form-group row mt-3">
-                        <label class="col-lg-3 col-form-label text-right">Fatura Açıklaması:</label>
-                        <div class="col-lg-9">
-                            <input type="text" class="form-control" name="FaturaAciklamasi" placeholder="Fatura Açıklaması" />
+                        <label class="col-lg-3 col-sm-12 col-form-label text-right">Fatura Açıklaması:</label>
+                        <div class="col-lg-4 col-md-9 col-sm-12">
+                            <textarea class="form-control" id="exampleTextarea" name="FaturaAciklamasi" rows="3"></textarea>
                             <span class="form-text text-muted">Fatura Açıklaması Giriniz</span>
                         </div>
                     </div>
@@ -32,7 +32,7 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-form-label text-right col-lg-3 col-sm-12">Enable Helper Buttons</label>
+                        <label class="col-form-label text-right col-lg-3 col-sm-12">Düzenleme Tarihi</label>
                         <div class="col-lg-4 col-md-9 col-sm-12">
                             <div class="input-group date">
                                 <input type="text" class="form-control" readonly="readonly" value="05/20/2017" id="kt_datepicker_3" />
@@ -42,11 +42,11 @@
                                     </span>
                                 </div>
                             </div>
-                            <span class="form-text text-muted">Enable clear and today helper buttons</span>
+                            <span class="form-text text-muted">Düzenleme Tarihi Giriniz</span>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-form-label text-right col-lg-3 col-sm-12">Enable Helper Buttons</label>
+                        <label class="col-form-label text-right col-lg-3 col-sm-12">Tahsilat Tarihi</label>
                         <div class="col-lg-4 col-md-9 col-sm-12">
                             <div class="input-group date">
                                 <input type="text" class="form-control" readonly="readonly" value="05/20/2017" id="kt_datepicker_3" />
@@ -56,39 +56,110 @@
                                     </span>
                                 </div>
                             </div>
-                            <span class="form-text text-muted">Enable clear and today helper buttons</span>
+                            <span class="form-text text-muted">Tahsilat Tarihi Giriniz</span>
                         </div>
                     </div>
                     <div class="separator separator-dashed my-10"></div>
                     <div class="form-group row">
-                        <label class="col-lg-1 col-form-label text-right">Contact:</label>
-                        <div class="col-lg-3">
-                            <input type="email" class="form-control" placeholder="Enter contact number" />
-                            <span class="form-text text-muted">Please enter your contact</span>
-                        </div>
-                        <label class="col-lg-1 col-form-label text-right">Fax:</label>
-                        <div class="col-lg-3">
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Fax number" />
-                                <div class="input-group-append">
-                                    <span class="input-group-text">
-                                        <i class="la la-info-circle"></i>
-                                    </span>
+                        <div class="col-lg-12">
+                            <!--begin::Form-->
+                            <form class="form">
+                                <div class="card-body">
+                                    <div class="form-group row">
+                                        <div class="col-lg-4">
+                                            <label>Full Name:</label>
+                                            <input type="email" class="form-control" placeholder="Enter full name" />
+                                            <span class="form-text text-muted">Please enter your full name</span>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <label>Email:</label>
+                                            <input type="email" class="form-control" placeholder="Enter email" />
+                                            <span class="form-text text-muted">Please enter your email</span>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <label>Username:</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <i class="la la-user"></i>
+                                                    </span>
+                                                </div>
+                                                <input type="text" class="form-control" placeholder="" />
+                                            </div>
+                                            <span class="form-text text-muted">Please enter your username</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-lg-4">
+                                            <label>Contact:</label>
+                                            <input type="email" class="form-control" placeholder="Enter contact number" />
+                                            <span class="form-text text-muted">Please enter your contact</span>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <label>Fax:</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <i class="la la-info-circle"></i>
+                                                    </span>
+                                                </div>
+                                                <input type="text" class="form-control" placeholder="Fax number" />
+                                            </div>
+                                            <span class="form-text text-muted">Please enter fax</span>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <label>Address:</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" placeholder="Enter your address" />
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">
+                                                        <i class="la la-map-marker"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <span class="form-text text-muted">Please enter your address</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-lg-4">
+                                            <label>Postcode:</label>
+                                            <div class="input-group">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">
+                                                        <i class="la la-bookmark-o"></i>
+                                                    </span>
+                                                </div>
+                                                <input type="text" class="form-control" placeholder="Enter your postcode" />
+                                            </div>
+                                            <span class="form-text text-muted">Please enter your postcode</span>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <label>User Group:</label>
+                                            <div class="radio-inline">
+                                                <label class="radio radio-solid">
+                                                    <input type="radio" name="example_2" checked="checked" value="2" />Sales Person
+                                                    <span></span>
+                                                </label>
+                                                <label class="radio radio-solid">
+                                                    <input type="radio" name="example_2" value="2" />Customer
+                                                    <span></span>
+                                                </label>
+                                            </div>
+                                            <span class="form-text text-muted">Please select user group</span>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <span class="form-text text-muted">Please enter fax</span>
-                        </div>
-                        <label class="col-lg-1 col-form-label text-right">Address:</label>
-                        <div class="col-lg-3">
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Enter your address" />
-                                <div class="input-group-append">
-                                    <span class="input-group-text">
-                                        <i class="la la-map-marker"></i>
-                                    </span>
+                                <div class="card-footer">
+                                    <div class="row">
+                                        <div class="col-lg-4"></div>
+                                        <div class="col-lg-8">
+                                            <button type="reset" class="btn btn-primary mr-2">Submit</button>
+                                            <button type="reset" class="btn btn-secondary">Cancel</button>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <span class="form-text text-muted">Please enter your address</span>
+                            </form>
+                            <!--end::Form-->
                         </div>
                     </div>
                     <div class="separator separator-dashed my-10"></div>
@@ -187,7 +258,7 @@
         }
 
         $("#kt_select2_6").select2({
-            placeholder: "Search for git repositories",
+            placeholder: "Müşteri yada tedarikçi seçinini yapınız",
             allowClear: true,
             ajax: {
                 url: "https://api.github.com/search/repositories",
@@ -237,22 +308,15 @@
             }
         }
 
+        debugger;
+
         // enable clear button 
         $('#kt_datepicker_3, #kt_datepicker_3_validate').datepicker({
             rtl: KTUtil.isRTL(),
-            todayBtn: "linked",
-            clearBtn: true,
+            todayBtn: "linked",     
+            clearBtn: true,        
             todayHighlight: true,
             orientation: "bottom left",
-            templates: arrows
-        });
-
-        // enable clear button for modal demo
-        $('#kt_datepicker_3_modal').datepicker({
-            rtl: KTUtil.isRTL(),
-            todayBtn: "linked",
-            clearBtn: true,
-            todayHighlight: true,
             templates: arrows
         });
 
