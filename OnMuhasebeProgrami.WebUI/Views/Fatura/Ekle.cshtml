@@ -35,7 +35,7 @@
                         <label class="col-form-label text-right col-lg-3 col-sm-12">Düzenleme Tarihi</label>
                         <div class="col-lg-4 col-md-9 col-sm-12">
                             <div class="input-group date">
-                                <input type="text" class="form-control" readonly="readonly" value="05/20/2017" id="kt_datepicker_3" />
+                                <input type="text" class="form-control" readonly="readonly" name="DuzenlemeTarihi" value="" id="kt_datepicker_3" />
                                 <div class="input-group-append">
                                     <span class="input-group-text">
                                         <i class="la la-calendar"></i>
@@ -49,7 +49,7 @@
                         <label class="col-form-label text-right col-lg-3 col-sm-12">Tahsilat Tarihi</label>
                         <div class="col-lg-4 col-md-9 col-sm-12">
                             <div class="input-group date">
-                                <input type="text" class="form-control" readonly="readonly" value="05/20/2017" id="kt_datepicker_3" />
+                                <input type="text" class="form-control" readonly="readonly" name="TahsilatTarihi" value="" id="kt_datepicker_3" />
                                 <div class="input-group-append">
                                     <span class="input-group-text">
                                         <i class="la la-calendar"></i>
@@ -63,33 +63,33 @@
                     <div id="kt_repeater_1">
                         <div class="form-group row">
                             <label class="col-lg-2 col-form-label text-right">Fatura Kalemleri:</label>
-                            <div data-repeater-list="" class="col-lg-10">
-                                <div data-repeater-item="" class="form-group row align-items-center">
+                            <div data-repeater-list="list222" class="col-lg-10">
+                                <div data-repeater-item="item111" class="form-group row align-items-center">
                                     <div class="col-md-4">
                                         <label>Hizmet/Ürün:</label>
-                                        <select class="form-control select2 kt_select2_urun_hizmet" id="" name="HizmetUrun">
+                                        <select class="form-control select2 kt_select2_urun_hizmet" name="HizmetUrun">
                                             <option label="Label"></option>
                                         </select>
                                         <div class="d-md-none mb-2"></div>
                                     </div>
                                     <div class="col-md-1">
                                         <label>Miktar:</label>
-                                        <input type="text" class="form-control" placeholder="Miktar" />
+                                        <input type="text" class="form-control" name="Miktar" placeholder="" />
                                         <div class="d-md-none mb-2"></div>
                                     </div>
                                     <div class="col-md-2">
                                         <label>Birim Fiyat:</label>
-                                        <input type="text" class="form-control" placeholder="Birim Fiyat" />
+                                        <input type="text" class="form-control" name="BirimFiyat" placeholder="Birim Fiyat" />
                                         <div class="d-md-none mb-2"></div>
                                     </div>
                                     <div class="col-md-2">
                                         <label>Vergi:</label>
-                                        <input type="text" class="form-control" placeholder="Vergi" />
+                                        <input type="text" class="form-control" name="Vergi" placeholder="Vergi" />
                                         <div class="d-md-none mb-2"></div>
                                     </div>
                                     <div class="col-md-2">
                                         <label>Toplam:</label>
-                                        <input type="text" class="form-control" value="" placeholder="" />
+                                        <input type="text" class="form-control" name="Toplam" placeholder="" />
                                         <div class="d-md-none mb-2"></div>
                                     </div>
                                     <div class="col-md-1">
@@ -114,8 +114,8 @@
                     <div class="row">
                         <div class="col-lg-5"></div>
                         <div class="col-lg-7">
-                            <button type="reset" class="btn btn-primary mr-2">Submit</button>
-                            <button type="reset" class="btn btn-secondary">Cancel</button>
+                            <button type="button" onclick="javascript: faturaEkle();" class="btn btn-primary mr-2">Kaydet</button>
+                            <button type="button" class="btn btn-secondary">İptal</button>
                         </div>
                     </div>
                 </div>
@@ -130,6 +130,27 @@
 
 
     <script>
+
+        function faturaEkle() {
+            var fields = document.querySelectorAll('input[name],select[name]');
+            var obj = {};
+            for (var i = 0, length = fields.length; i < length; i++) {
+                obj[fields[i].name] = fields[i].value;
+            }
+
+            $.ajax("/Fatura/KalemleriKaydet", {
+                method: 'POST',
+                data: { jsonData: JSON.stringify(obj) },
+            }).done(function (r) {
+                debugger;
+                toastr.success('Preview updated', 'Preview has been updated with current configured layout.');
+            }).always(function () {
+                debugger;
+                setTimeout(function () {
+                    location.reload();
+                }, 600);
+            });          
+        }
 
         $('#kt_repeater_1').repeater({
             initEmpty: false,    

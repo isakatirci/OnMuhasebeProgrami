@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OnMuhasebeProgrami.WebUI.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -16,6 +17,12 @@ namespace OnMuhasebeProgrami.WebUI.Controllers
 
         public ActionResult Ekle()
         {
+            return View();
+        }
+
+        public ActionResult KalemleriKaydet(String jsonData)
+        {
+            FaturaEkleme account = Newtonsoft.Json.JsonConvert.DeserializeObject<FaturaEkleme>(jsonData);
             return View();
         }
     }
