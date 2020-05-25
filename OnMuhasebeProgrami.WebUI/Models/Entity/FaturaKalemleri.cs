@@ -13,12 +13,14 @@ namespace OnMuhasebeProgrami.WebUI.Models.Entity
 
         public int? FaturaId { get; set; }
 
-        public string HizmetUrunId { get; set; }
+        public int? HizmetUrunId { get; set; }
 
         public decimal? Miktar { get; set; }
 
         public decimal? BirimFiyat { get; set; }
+        public decimal? Vergi { get; set; }
 
         public decimal? KDV { get; set; }
+        public string Toplam { get; internal set; }
     }
 }

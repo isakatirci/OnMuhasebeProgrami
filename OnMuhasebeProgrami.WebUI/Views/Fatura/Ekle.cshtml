@@ -63,8 +63,8 @@
                     <div id="kt_repeater_1">
                         <div class="form-group row">
                             <label class="col-lg-2 col-form-label text-right">Fatura Kalemleri:</label>
-                            <div data-repeater-list="list222" class="col-lg-10">
-                                <div data-repeater-item="item111" class="form-group row align-items-center">
+                            <div data-repeater-list="FaturaEklemeKalem" class="col-lg-10">
+                                <div data-repeater-item="" class="form-group row align-items-center">
                                     <div class="col-md-4">
                                         <label>Hizmet/Ürün:</label>
                                         <select class="form-control select2 kt_select2_urun_hizmet" name="HizmetUrun">
@@ -132,7 +132,7 @@
     <script>
 
         function faturaEkle() {
-            var fields = document.querySelectorAll('input[name],select[name]');
+            var fields = document.querySelectorAll('textarea[name],input[name],select[name]');
             var obj = {};
             for (var i = 0, length = fields.length; i < length; i++) {
                 obj[fields[i].name] = fields[i].value;
@@ -170,7 +170,7 @@
                 placeholder: "Ürün yada hizmet seçiniz",
                 allowClear: true,
                 ajax: {
-                    url: "https://api.github.com/search/repositories",
+                    url: "/Fatura/HizmetUrunAra",
                     dataType: 'json',
                     delay: 250,
                     data: function (params) {
@@ -212,7 +212,7 @@
             placeholder: "Müşteri yada tedarikçi seçiniz",
             allowClear: true,
             ajax: {
-                url: "https://api.github.com/search/repositories",
+                url: "/Fatura/MusteriTedarikciAra",
                 dataType: 'json',
                 delay: 250,
                 data: function (params) {
@@ -258,6 +258,19 @@
             }
         }
 
+        ; (function ($) {
+            $.fn.datepicker.dates['tr'] = {
+                days: ["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi", "Pazar"],
+                daysShort: ["Pz", "Pzt", "Sal", "Çrş", "Prş", "Cu", "Cts", "Pz"],
+                daysMin: ["Pz", "Pzt", "Sa", "Çr", "Pr", "Cu", "Ct", "Pz"],
+                months: ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"],
+                monthsShort: ["Oca", "Şub", "Mar", "Nis", "May", "Haz", "Tem", "Ağu", "Eyl", "Eki", "Kas", "Ara"],
+                today: "Bugün",
+                clear: "Temizle",
+            };
+        }(jQuery));
+
+
         // enable clear button
         $('#kt_datepicker_3, #kt_datepicker_3_validate').datepicker({
             rtl: KTUtil.isRTL(),
@@ -265,8 +278,13 @@
             clearBtn: true,
             todayHighlight: true,
             orientation: "bottom left",
-            templates: arrows
+            templates: arrows,
+            format: 'dd/mm/yyyy',
+            language: "tr"
         });
+
+
+
 
     </script>
 
