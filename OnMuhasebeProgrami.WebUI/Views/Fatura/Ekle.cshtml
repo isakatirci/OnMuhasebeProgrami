@@ -187,10 +187,8 @@
 
                         params.page = params.page || 1;
 
-                        let items = data.items.map(function (item) { return { id: (item.full_name || item.text), text: (item.full_name || item.text) }; });
-
                         return {
-                            results: items,
+                            results: data.items,
                             pagination: {
                                 more: (params.page * 30) < data.total_count
                             }
@@ -228,10 +226,8 @@
                     // scrolling can be used
                     params.page = params.page || 1;
 
-                    let items = data.items.map(function (item) { return { id: (item.full_name || item.text), text: (item.full_name || item.text) }; });
-
                     return {
-                        results: items,
+                        results: data.items,
                         pagination: {
                             more: (params.page * 30) < data.total_count
                         }
