@@ -21,6 +21,6 @@ namespace OnMuhasebeProgrami.WebUI.Models.Entity
         public decimal? Vergi { get; set; }
 
         public decimal? KDV { get; set; }
-        public string Toplam { get; internal set; }
+        public decimal? Toplam { get;  set; }
     }
 }

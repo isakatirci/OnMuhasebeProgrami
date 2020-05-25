@@ -62,43 +62,42 @@ namespace OnMuhasebeProgrami.WebUI.Controllers
             return Json(new { items = list }, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult KalemleriKaydet(String jsonData)
+        public String KalemleriKaydet(String jsonData)
         {
             Dictionary<string, string> fields = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonData);
 
             Fatura faturaEkleme = new Fatura();            
-            var faturaEklemeKalemlerKeys = fields.Keys.Where(x => x.Trim().StartsWith("FaturaKalemleri"));
+            var faturaEklemeKalemlerKeys = fields.Keys.Where(x => x.Trim().StartsWith("FaturaEklemeKalem"));
 
-            var length = (int)Math.Ceiling(faturaEklemeKalemlerKeys.Count() / 5m);
 
             List<FaturaKalemleri> faturaEklemeKalemler = new List<FaturaKalemleri>();
-            for (int i = 0; i < length; i++)
+            for (int i = 0, length= (int)Math.Ceiling(faturaEklemeKalemlerKeys.Count() / 5m); i < length ; i++)
             {
                 FaturaKalemleri faturaKalem = new FaturaKalemleri();
                 InvokeKalem(faturaKalem, (kalem) =>
                 {
                     var i1 = i;
-                    faturaKalem.HizmetUrunId = Helper.IntParse(fields["FaturaKalemleri["+ i1 + "][HizmetUrun]"]);
+                    faturaKalem.HizmetUrunId = Helper.IntParse(fields["FaturaEklemeKalem[" + i1 + "][HizmetUrun]"]);
                 });
                 InvokeKalem(faturaKalem, (kalem) =>
                 {
                     var i1 = i;
-                    faturaKalem.Miktar = Helper.DecimalParse(fields["FaturaKalemleri[" + i1 + "][Miktar]"]);
+                    faturaKalem.Miktar = Helper.DecimalParse(fields["FaturaEklemeKalem[" + i1 + "][Miktar]"]);
                 });
                 InvokeKalem(faturaKalem, (kalem) =>
                 {
                     var i1 = i;
-                    faturaKalem.BirimFiyat = Helper.DecimalParse(fields["FaturaKalemleri[" + i1 + "][BirimFiyat]"]);
+                    faturaKalem.BirimFiyat = Helper.DecimalParse(fields["FaturaEklemeKalem[" + i1 + "][BirimFiyat]"]);
                 });
                 InvokeKalem(faturaKalem, (kalem) =>
                 {
                     var i1 = i;
-                    faturaKalem.Vergi = Helper.DecimalParse(fields["FaturaKalemleri[" + i1 + "][Vergi]"]);
+                    faturaKalem.Vergi = Helper.DecimalParse(fields["FaturaEklemeKalem[" + i1 + "][Vergi]"]);
                 });
                 InvokeKalem(faturaKalem, (kalem) =>
                 {
                     var i1 = i;
-                    faturaKalem.Toplam = fields["FaturaKalemleri[" + i1 + "][Toplam]"];
+                    faturaKalem.Toplam = Helper.DecimalParse(fields["FaturaEklemeKalem[" + i1 + "][Toplam]"]);
                 });
                 faturaEklemeKalemler.Add(faturaKalem);
             }
@@ -110,16 +109,32 @@ namespace OnMuhasebeProgrami.WebUI.Controllers
 
             InvokeFatura(faturaEkleme, (fatura) =>
             {
+                fatura.FaturaAciklamasi = fields["FaturaAciklamasi"];
+            });
+
+            InvokeFatura(faturaEkleme, (fatura) =>
+            {
                 fatura.DuzenlenmeTarihi = Helper.DateTimeParse(fields["DuzenlemeTarihi"]);
             });
 
             InvokeFatura(faturaEkleme, (fatura) =>
             {
-                fatura.DuzenlenmeTarihi = Helper.DateTimeParse(fields["TahsilatTarihi"]);
+                fatura.TahsilatTarihi = Helper.DateTimeParse(fields["TahsilatTarihi"]);
             });
 
+            using (OnMuhasebeUygulamasiDb db = new OnMuhasebeUygulamasiDb())
+            {
+                db.Fatura.Add(faturaEkleme);
+                db.SaveChanges();
+                for (int i = 0, length = faturaEklemeKalemler.Count(); i <length ; i++)
+                {
+                    faturaEklemeKalemler[i].FaturaId = faturaEkleme.Id;
+                    db.FaturaKalemleri.Add(faturaEklemeKalemler[i]);
+                }
+                db.SaveChanges();
+            }
             
-            return View();
+            return "Fatura Eklendi";
         }
 
         private void InvokeKalem(FaturaKalemleri kalem, Action<FaturaKalemleri> action)
