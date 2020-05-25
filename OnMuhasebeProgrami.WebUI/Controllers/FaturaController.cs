@@ -161,26 +161,3 @@ namespace OnMuhasebeProgrami.WebUI.Controllers
         }
     }
 }
-
-/*
- 
-    {
-   "Musteri":"saaskit/saaskit",
-   "DuzenlemeTarihi":"04/28/2020",
-   "TahsilatTarihi":"04/29/2020",
-   "FaturaKalemleri[0][HizmetUrun]":"riscv/riscv-isa-manual",
-   "FaturaKalemleri[0][Miktar]":"23213",
-   "FaturaKalemleri[0][BirimFiyat]":"231",
-   "FaturaKalemleri[0][Vergi]":"213",
-   "FaturaKalemleri[0][Toplam]":"123",
-   "FaturaKalemleri[1][HizmetUrun]":"ucb-bar/riscv-sodor",
-   "FaturaKalemleri[1][Miktar]":"2312",
-   "FaturaKalemleri[1][BirimFiyat]":"123",
-   "FaturaKalemleri[1][Vergi]":"1232",
-   "FaturaKalemleri[1][Toplam]":"123",
-   "select":"on",
-   "quick_panel_notifications_2":"on"
-}
-
-     
-     */
